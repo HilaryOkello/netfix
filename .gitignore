@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+venv_py39/ # Add this line specifically for your virtual environment name
+*.env
+.flaskenv
+.idea/ # For PyCharm/IntelliJ IDE files
+.vscode/ # For VS Code IDE files (optional, depends on your preference)
+
+# Django specific
+db.sqlite3
+/media/
+/static/ # If you collect static files into a root /static/ folder
+
+# OS generated files
+.DS_Store # macOS
+Thumbs.db # Windows
