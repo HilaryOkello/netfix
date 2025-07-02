@@ -10,7 +10,12 @@ class User(AbstractUser):
 
 
 class Customer(models.Model):
-    pass
+    # This links a Customer profile to your custom User model
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    birth_date = models.DateField(null=True, blank=True) # Added a birth date field
+
+    def __str__(self):
+        return f"Customer Profile for {self.user.username}"
 
 
 class Company(models.Model):
