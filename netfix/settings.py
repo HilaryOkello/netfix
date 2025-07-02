@@ -60,7 +60,7 @@ ROOT_URLCONF = 'netfix.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # ADDED: This is good practice for project-wide templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,3 +124,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# This tells Django where to look for static files during development
+# (when you run `python manage.py runserver`).
+# It assumes you have a 'static' folder directly inside your main project directory,
+# next to manage.py, like:
+# netfix/
+# ├── manage.py
+# ├── netfix/ (inner project dir)
+# └── static/  <-- Your global static files go here
+#     └── css/
+#         └── style.css
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# This is where Django will collect all static files to for production deployment
+# (after you run `python manage.py collectstatic`).
+# You typically don't set this during development, but it's good to know.
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
