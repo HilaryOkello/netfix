@@ -18,22 +18,84 @@ def validate_email(value):
 
 
 class CustomerSignUpForm(UserCreationForm):
-    pass
+    email = forms.EmailField(
+        max_length=100, validators=[validate_email], help_text='Required')
+    birth_date = forms.DateField(widget=DateInput)
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+
+    @transaction.atomic
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.is_customer = True
+        user.email = self.cleaned_data.get('email')
+        if commit:
+            user.save()
+            customer = Customer.objects.create(
+                user=user, birth_date=self.cleaned_data.get('birth_date'))
+            customer.save()
+        return user
+
+    @transaction.atomic
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.is_customer = True
+        user.email = self.cleaned_data.get('email')
+        if commit:
+            user.save()
+            customer = Customer.objects.create(
+                user=user, birth_date=self.cleaned_data.get('birth_date'))
+            customer.save()
+        return user
 
 
 class CompanySignUpForm(UserCreationForm):
-    pass
+    email = forms.EmailField(
+        max_length=100, validators=[validate_email], help_text='Required')
+    field = forms.ChoiceField(choices=(('Air Conditioner', 'Air Conditioner'),
+                                      ('All in One', 'All in One'),
+                                      ('Carpentry', 'Carpentry'),
+                                      ('Electricity', 'Electricity'),
+                                      ('Gardening', 'Gardening'),
+                                      ('Home Machines', 'Home Machines'),
+                                      ('House Keeping', 'House Keeping'),
+                                      ('Interior Design', 'Interior Design'),
+                                      ('Locks', 'Locks'),
+                                      ('Painting', 'Painting'),
+                                      ('Plumbing', 'Plumbing'),
+                                      ('Water Heaters', 'Water Heaters')))
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+
+    @transaction.atomic
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.is_company = True
+        user.email = self.cleaned_data.get('email')
+        if commit:
+            user.save()
+            company = Company.objects.create(
+                user=user, field=self.cleaned_data.get('field'))
+            company.save()
+        return user
+
+    @transaction.atomic
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.is_company = True
+        user.email = self.cleaned_data.get('email')
+        if commit:
+            user.save()
+            company = Company.objects.create(
+                user=user, field=self.cleaned_data.get('field'))
+            company.save()
+        return user
 
 
 class UserLoginForm(forms.Form):
-    def __init__(self, *args, **kwargs):
-        super(UserLoginForm, self).__init__(*args, **kwargs)
-
     email = forms.EmailField(widget=forms.TextInput(
-        attrs={'placeholder': 'Enter Email'}))
+        attrs={'placeholder': 'Enter Email', 'autocomplete': 'off'}))
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'placeholder': 'Enter Password'}))
-
-    def __init__(self, *args, **kwargs):
-        super(UserLoginForm, self).__init__(*args, **kwargs)
-        self.fields['email'].widget.attrs['autocomplete'] = 'off'
