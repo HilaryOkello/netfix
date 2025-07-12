@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, authenticate
 from django.db import transaction
 from django.core.exceptions import ValidationError
+from datetime import date
 
 from .models import User, Company, Customer
 
@@ -37,17 +38,11 @@ class CustomerSignUpForm(UserCreationForm):
             customer.save()
         return user
 
-    @transaction.atomic
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.is_customer = True
-        user.email = self.cleaned_data.get('email')
-        if commit:
-            user.save()
-            customer = Customer.objects.create(
-                user=user, birth_date=self.cleaned_data.get('birth_date'))
-            customer.save()
-        return user
+    def clean_birth_date(self):
+        birth_date = self.cleaned_data['birth_date']
+        if birth_date > date.today():
+            raise ValidationError("Birth date cannot be in the future.")
+        return birth_date
 
 
 class CompanySignUpForm(UserCreationForm):
@@ -68,18 +63,6 @@ class CompanySignUpForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-
-    @transaction.atomic
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.is_company = True
-        user.email = self.cleaned_data.get('email')
-        if commit:
-            user.save()
-            company = Company.objects.create(
-                user=user, field=self.cleaned_data.get('field'))
-            company.save()
-        return user
 
     @transaction.atomic
     def save(self, commit=True):
