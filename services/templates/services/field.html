@@ -5,22 +5,17 @@
 {% block content %}
 
     {% if services|length != 0 %}
-        <p class="title">{{field}} Services</p>
+        <h2 class="title">{{field}} Services</h2>
         <ul class='services_list'>
             {% for service in services %}
-                <div style="display: ruby;">
-                    <div class='service_list_info'>
-                        <li><a href="/services/{{service.id}}">{{ service.name }}</a>-- {{ service.price_hour }}€/hour</li>
-                        <pre>{{ service.description }}</pre>
-                    </div>
-                    <p style="display:block; margin: 0; float: right;font-size: small; margin-right: 30px;">by <a href="/company/{{service.company.user.username}}">{{service.company.user.username}}</a></p>
+                <div class="service_list_info">
+                    <li><a href="/services/{{service.id}}">{{ service.name }}</a>-- {{ service.price_hour }}€/hour</li>
+                    <p>{{ service.description }}</p>
+                    <p style="font-size: 0.9em; color: #666;">by <a href="/company/{{service.company.user.username}}">{{service.company.user.username}}</a></p>
                 </div>
-                {% if forloop.counter != services|length %}
-                    <div class="line"></div>
-                {% endif %}
             {% endfor %}
         </ul>
     {% else %}
-        <h2>Sorry. No {{field}} services available</h2>
+        <p>No {{field}} services available yet.</p>
     {% endif %}
 {% endblock %}

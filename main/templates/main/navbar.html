@@ -22,9 +22,9 @@
             {% if user.is_company %}
                 <li><a href="/services/create">Create Service</a></li>
             {% endif %}
-            <li><a href="/logout">Logout</a></li>
+            <li class="last_navbar"><a href="/logout">Logout</a></li>
         {% else %}
-            <li><a href="/login">Login</a></li>
+            <li class="last_navbar"><a href="/login">Login</a></li>
             <li><a href="/register">Sign Up</a></li>
         {% endif %}
     </ul>

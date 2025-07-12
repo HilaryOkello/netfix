@@ -1,19 +1,23 @@
-{% extends 'main/base.html' %} 
+{% extends 'main/base.html' %}
+{% load static %} 
     {% block title %}
         NetFix
     {% endblock %}
 
 {% block content %}
-    <div style="margin-top: 50px;">
+    <div class="home-section">
         <p class="site_title">NetFix</p>
-        <img class="home_logo" src="static/css/logo.png" alt="logo">
+        <img class="home_logo" src="{% static 'css/logo.png' %}" alt="logo">
     </div>
 
-    <h2>Most Requested Services</h2>
+    <h2 class="profile-section-title">Most Requested Services</h2>
     {% if most_requested %}
-        <ul>
+        <ul class="services_list">
             {% for service in most_requested %}
-                <li><a href="/services/{{ service.id }}">{{ service.name }}</a> ({{ service.num_requests }} requests)</li>
+                <li class="service_list_info">
+                    <a href="/services/{{ service.id }}">{{ service.name }}</a> 
+                    <p style="font-size: 0.9em; color: #666;">({{ service.num_requests }} requests)</p>
+                </li>
             {% endfor %}
         </ul>
     {% else %}

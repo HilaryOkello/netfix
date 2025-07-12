@@ -3,7 +3,7 @@
     Services List
 {% endblock %}
 {% block content %}
-    <p class="title">Services</p>
+    <h2 class="title">Services</h2>
     {% if user.is_company %}
         <a class="create_service" href="/services/create"> Create Service</a>
     {% endif %}
@@ -13,13 +13,12 @@
                 <div class="service_list_info">
                     <li>
                         <a href="/services/{{ service.id }}">{{ service.name }}</a> -- {{ service.price_hour }}€/hour
-                        <pre>{{ service.description }}</pre>
+                        <p>{{ service.description }}</p>
                     </li>
                 </div>
-                <div class="line"></div>
             {% endfor %}
         {% else %}
-            <h2>Sorry No services available yet</h2>
+            <p>No services available yet.</p>
         {% endif %}
      </div>
 {% endblock %}
