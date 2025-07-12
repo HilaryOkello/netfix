@@ -8,4 +8,15 @@
         <p class="site_title">NetFix</p>
         <img class="home_logo" src="static/css/logo.png" alt="logo">
     </div>
+
+    <h2>Most Requested Services</h2>
+    {% if most_requested %}
+        <ul>
+            {% for service in most_requested %}
+                <li><a href="/services/{{ service.id }}">{{ service.name }}</a> ({{ service.num_requests }} requests)</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No services have been requested yet.</p>
+    {% endif %}
 {% endblock %}
