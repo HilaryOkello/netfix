@@ -22,7 +22,19 @@ class CreateNewService(forms.Form):
 
         self.fields['name'].widget.attrs['autocomplete'] = 'off'
 
+    def clean_price_hour(self):
+        price_hour = self.cleaned_data['price_hour']
+        if price_hour <= 0:
+            raise forms.ValidationError("Price per hour must be a positive number.")
+        return price_hour
+
 
 class RequestServiceForm(forms.Form):
     address = forms.CharField(max_length=100)
     time = forms.IntegerField()
+
+    def clean_time(self):
+        time = self.cleaned_data['time']
+        if time <= 0:
+            raise forms.ValidationError("Service time must be a positive number.")
+        return time
