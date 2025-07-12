@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 
 from users.models import Company, Customer, User
 
-from .models import Service
+from .models import Service, ServiceRequest
 from .forms import CreateNewService, RequestServiceForm
 
 
