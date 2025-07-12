@@ -24,4 +24,5 @@ class CreateNewService(forms.Form):
 
 
 class RequestServiceForm(forms.Form):
-    pass
+    address = forms.CharField(max_length=100)
+    time = forms.IntegerField()
