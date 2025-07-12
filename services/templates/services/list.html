@@ -9,7 +9,14 @@
     {% endif %}
     <div class='services_list'>
         {% if services %}
-            {% for service in services.all %}
+            {% for service in services %}
+                <div class="service_list_info">
+                    <li>
+                        <a href="/services/{{ service.id }}">{{ service.name }}</a> -- {{ service.price_hour }}€/hour
+                        <pre>{{ service.description }}</pre>
+                    </li>
+                </div>
+                <div class="line"></div>
             {% endfor %}
         {% else %}
             <h2>Sorry No services available yet</h2>
