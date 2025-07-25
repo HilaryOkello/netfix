@@ -32,3 +32,15 @@ class Service(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ServiceRequest(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    address = models.CharField(max_length=100)
+    time = models.IntegerField()
+    request_date = models.DateTimeField(auto_now=True)
+    price = models.DecimalField(decimal_places=2, max_digits=100, default=0)
+
+    def __str__(self):
+        return self.customer.user.username + ' - ' + self.service.name
